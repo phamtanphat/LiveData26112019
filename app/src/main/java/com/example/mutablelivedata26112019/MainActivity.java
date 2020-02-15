@@ -31,13 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Truyền dữ liệu cho mutable
         // 1 : Set value (Chỉ dành cho mainthread)
-        mutableLiveDataString.setValue("Hello main");
-
+//        mutableLiveDataString.setValue("Hello main");
+        // 2 : Post value ( Dành cho luồng phụ , vẫn chạy được trên luồng chính)
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mutableLiveDataString.setValue("Hello main");
+            }
+        });
+        thread.start();
     }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mutableLiveDataString.setValue("Finish");
 
-    }
 }
